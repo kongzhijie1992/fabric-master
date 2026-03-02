@@ -1,0 +1,30 @@
+{
+  "Navigation": {
+    "home": "首页",
+    "capabilities": "生产能力",
+    "quality": "质量与合规",
+    "products": "产品中心",
+    "about": "关于我们",
+    "contact": "联系与询盘",
+    "legal": "法律声明"
+  },
+  "CTA": {
+    "requestQuote": "获取报价",
+    "getSample": "申请样品",
+    "downloadDeck": "下载能力手册",
+    "submit": "提交询盘"
+  },
+  "Form": {
+    "sending": "提交中...",
+    "success": "提交成功。",
+    "spamBlocked": "提交已被拦截。",
+    "rateLimit": "请求过于频繁，请稍后再试。",
+    "captchaRequired": "请先完成腾讯验证码。",
+    "captchaVerify": "验证腾讯验证码",
+    "captchaVerified": "验证码已通过"
+  },
+  "Footer": {
+    "rights": "保留所有权利。",
+    "scopeNote": "经营范围以营业执照登记信息为准。"
+  }
+}

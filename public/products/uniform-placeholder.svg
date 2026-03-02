@@ -1,0 +1,6 @@
+<svg width="900" height="640" viewBox="0 0 900 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="640" fill="#EAF4F1"/>
+  <path d="M310 170L390 120H510L590 170L560 260L520 245V500H380V245L340 260L310 170Z" fill="#D0E6E0" stroke="#1F544D" stroke-width="6"/>
+  <line x1="450" y1="170" x2="450" y2="500" stroke="#1F544D" stroke-width="4"/>
+  <text x="450" y="560" text-anchor="middle" fill="#1F544D" font-size="34" font-family="sans-serif">Uniform Placeholder</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#E8F2EF"/>
+  <rect x="70" y="90" width="1060" height="720" rx="32" fill="#FFFFFF" stroke="#CFE2DC" stroke-width="4"/>
+  <rect x="130" y="170" width="420" height="280" rx="18" fill="#D9EBE6"/>
+  <rect x="590" y="170" width="480" height="120" rx="16" fill="#F2F7F5"/>
+  <rect x="590" y="320" width="480" height="120" rx="16" fill="#F2F7F5"/>
+  <rect x="130" y="490" width="940" height="250" rx="18" fill="#F8FBFA"/>
+  <text x="600" y="130" text-anchor="middle" fill="#1F4F47" font-size="38" font-family="sans-serif">Factory Placeholder Photo</text>
+  <text x="600" y="650" text-anchor="middle" fill="#2E6A61" font-size="30" font-family="sans-serif">Replace with real workshop / line / QC images</text>
+</svg>

@@ -1,0 +1,30 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "capabilities": "Capabilities",
+    "quality": "Quality & Compliance",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "legal": "Legal"
+  },
+  "CTA": {
+    "requestQuote": "Request a Quote",
+    "getSample": "Get a Sample",
+    "downloadDeck": "Download Capability Deck",
+    "submit": "Submit RFQ"
+  },
+  "Form": {
+    "sending": "Submitting...",
+    "success": "Submitted successfully.",
+    "spamBlocked": "Submission rejected.",
+    "rateLimit": "Too many requests. Please try again later.",
+    "captchaRequired": "Please complete Tencent captcha verification.",
+    "captchaVerify": "Verify Tencent Captcha",
+    "captchaVerified": "Captcha verified"
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "scopeNote": "Business scope is subject to official business license registration."
+  }
+}
