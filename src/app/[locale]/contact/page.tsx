@@ -20,6 +20,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: AppLo
 export default async function ContactPage({params}: {params: Promise<{locale: AppLocale}>}) {
   const {locale} = await params;
   const content = getContent(locale);
+  const whatsapp = (contactConfig as {whatsapp?: string}).whatsapp;
 
   return (
     <div className="section-gap">
@@ -41,7 +42,7 @@ export default async function ContactPage({params}: {params: Promise<{locale: Ap
             </div>
             <div>
               <dt className="font-semibold text-slate-900">WhatsApp</dt>
-              <dd>{contactConfig.whatsapp}</dd>
+              <dd>{whatsapp || '-'}</dd>
             </div>
             <div>
               <dt className="font-semibold text-slate-900">Address</dt>
@@ -56,6 +57,8 @@ export default async function ContactPage({params}: {params: Promise<{locale: Ap
             labels={content.contact.formLabels}
             placeholders={content.contact.placeholders}
             captchaAppId={env.TENCENT_CAPTCHA_APP_ID}
+            rfqEndpoint={env.NEXT_PUBLIC_RFQ_ENDPOINT}
+            fallbackEmail={env.NEXT_PUBLIC_RFQ_EMAIL}
           />
         </section>
       </div>

@@ -39,12 +39,16 @@ export function RfqForm({
   locale,
   labels,
   placeholders,
-  captchaAppId
+  captchaAppId,
+  rfqEndpoint,
+  fallbackEmail
 }: {
   locale: AppLocale;
   labels: FormLabels;
   placeholders: Placeholders;
   captchaAppId?: string;
+  rfqEndpoint?: string;
+  fallbackEmail: string;
 }) {
   const tCta = useTranslations('CTA');
   const tForm = useTranslations('Form');
@@ -56,6 +60,7 @@ export function RfqForm({
   const [captchaRandstr, setCaptchaRandstr] = useState('');
 
   const captchaEnabled = Boolean(captchaAppId);
+  const endpointEnabled = Boolean(rfqEndpoint);
 
   function runCaptcha() {
     if (!captchaAppId || !window.TencentCaptcha) {
@@ -74,6 +79,26 @@ export function RfqForm({
     captcha.show();
   }
 
+  function buildMailBody(formData: FormData) {
+    const rows = [
+      `Name: ${String(formData.get('name') || '')}`,
+      `Company: ${String(formData.get('company') || '')}`,
+      `Email: ${String(formData.get('email') || '')}`,
+      `WhatsApp/WeChat: ${String(formData.get('whatsappWechat') || '')}`,
+      `Product Type: ${String(formData.get('productType') || '')}`,
+      `Target Quantity: ${String(formData.get('targetQuantity') || '')}`,
+      `Target Price: ${String(formData.get('targetPrice') || '')}`,
+      `Target Delivery Date: ${String(formData.get('targetDeliveryDate') || '')}`,
+      '',
+      'Message:',
+      `${String(formData.get('message') || '')}`,
+      '',
+      'Note: If you selected a tech pack file in the website form, please attach it in this email manually.'
+    ];
+
+    return rows.join('\n');
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitting(true);
@@ -83,6 +108,12 @@ export function RfqForm({
     const formData = new FormData(formElement);
     formData.set('locale', locale);
     formData.set('sourcePage', `/${locale}/contact`);
+
+    const honeypot = String(formData.get('website') || '').trim();
+    if (honeypot) {
+      setSubmitting(false);
+      return;
+    }
 
     if (captchaEnabled) {
       formData.set('captchaTicket', captchaTicket);
@@ -95,19 +126,32 @@ export function RfqForm({
       }
     }
 
-    const response = await fetch('/api/rfq', {
-      method: 'POST',
-      body: formData
-    });
+    if (endpointEnabled) {
+      const response = await fetch(rfqEndpoint!, {
+        method: 'POST',
+        body: formData
+      });
 
-    if (!response.ok) {
-      const payload = (await response.json().catch(() => ({}))) as {message?: string};
-      setSubmitting(false);
-      setError(payload.message || 'Request failed.');
-      return;
+      if (!response.ok) {
+        setSubmitting(false);
+        setError(tForm('requestFailed'));
+        return;
+      }
+    } else {
+      try {
+        const subject = encodeURIComponent('RFQ Inquiry');
+        const body = encodeURIComponent(buildMailBody(formData));
+        window.location.href = `mailto:${fallbackEmail}?subject=${subject}&body=${body}`;
+      } catch {
+        setSubmitting(false);
+        setError(tForm('mailClientError'));
+        return;
+      }
     }
 
     formElement.reset();
+    setCaptchaTicket('');
+    setCaptchaRandstr('');
     setSubmitting(false);
     router.push(`/${locale}/contact/success`);
   }
@@ -116,6 +160,10 @@ export function RfqForm({
     <>
       {captchaEnabled ? <Script src="https://ssl.captcha.qq.com/TCaptcha.js" strategy="afterInteractive" /> : null}
       <form onSubmit={onSubmit} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+          {endpointEnabled ? tForm('endpointModeNote') : tForm('staticModeNote')}
+        </div>
+
         <div className="grid gap-4 md:grid-cols-2">
           <label className="text-sm font-medium text-slate-700">
             {labels.name}

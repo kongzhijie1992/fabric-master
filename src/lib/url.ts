@@ -1,4 +1,3 @@
-import 'server-only';
 import {env} from '@/lib/env';
 
 export function toAbsoluteUrl(path: string) {

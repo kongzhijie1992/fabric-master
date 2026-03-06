@@ -21,7 +21,11 @@
     "rateLimit": "请求过于频繁，请稍后再试。",
     "captchaRequired": "请先完成腾讯验证码。",
     "captchaVerify": "验证腾讯验证码",
-    "captchaVerified": "验证码已通过"
+    "captchaVerified": "验证码已通过",
+    "requestFailed": "提交失败，请稍后重试或直接联系我们。",
+    "mailClientError": "无法打开本地邮箱客户端，请直接联系我们。",
+    "staticModeNote": "静态模式：提交后会打开本地邮箱草稿，文件不会自动上传，请在邮件中手动附加技术包。",
+    "endpointModeNote": "接口模式：表单将直接提交到你配置的外部 RFQ 接口。"
   },
   "Footer": {
     "rights": "保留所有权利。",

@@ -4,14 +4,15 @@
   "private": true,
   "packageManager": "pnpm@9.12.0",
   "engines": {
-    "node": ">=20 <21"
+    "node": ">=20 <26"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --incremental false -p tsconfig.typecheck.json",
     "format": "prettier --write ."
   },
   "dependencies": {

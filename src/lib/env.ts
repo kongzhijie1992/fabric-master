@@ -1,12 +1,14 @@
-import 'server-only';
-
 export type EmailProvider = 'none' | 'smtp';
 
 type Env = {
   NEXT_PUBLIC_SITE_URL: string;
-  LEADS_STORE: string;
+  NEXT_PUBLIC_RFQ_ENDPOINT?: string;
+  NEXT_PUBLIC_RFQ_EMAIL: string;
   ASSET_BASE_URL?: string;
+  BAIDU_TONGJI_ID?: string;
+  TENCENT_CAPTCHA_APP_ID?: string;
   EMAIL_PROVIDER: EmailProvider;
+  LEADS_STORE: string;
   SMTP_HOST?: string;
   SMTP_PORT?: number;
   SMTP_USER?: string;
@@ -14,8 +16,6 @@ type Env = {
   SMTP_FROM?: string;
   FEISHU_WEBHOOK_URL?: string;
   WECOM_WEBHOOK_URL?: string;
-  BAIDU_TONGJI_ID?: string;
-  TENCENT_CAPTCHA_APP_ID?: string;
   TENCENT_CAPTCHA_APP_SECRET?: string;
 };
 
@@ -62,8 +62,9 @@ function loadEnv(): Env {
   const errors: string[] = [];
 
   const NEXT_PUBLIC_SITE_URL = readString('NEXT_PUBLIC_SITE_URL', 'http://localhost:3000')!;
-  const LEADS_STORE = readString('LEADS_STORE', './data/leads.json')!;
-  const ASSET_BASE_URL = normalizeBaseUrl(readString('ASSET_BASE_URL'));
+  const NEXT_PUBLIC_RFQ_ENDPOINT = readString('NEXT_PUBLIC_RFQ_ENDPOINT');
+  const NEXT_PUBLIC_RFQ_EMAIL = readString('NEXT_PUBLIC_RFQ_EMAIL', 'sales@example.com')!;
+  const ASSET_BASE_URL = normalizeBaseUrl(readString('ASSET_BASE_URL') || readString('NEXT_PUBLIC_ASSET_BASE_URL'));
 
   const providerRaw = readString('EMAIL_PROVIDER', 'none')!;
   const EMAIL_PROVIDER = providerRaw === 'smtp' ? 'smtp' : providerRaw === 'none' ? 'none' : undefined;
@@ -86,21 +87,22 @@ function loadEnv(): Env {
     errors.push((error as Error).message);
   }
 
+  if (NEXT_PUBLIC_RFQ_ENDPOINT) {
+    try {
+      validateUrl('NEXT_PUBLIC_RFQ_ENDPOINT', NEXT_PUBLIC_RFQ_ENDPOINT);
+    } catch (error) {
+      errors.push((error as Error).message);
+    }
+  }
+
   const SMTP_HOST = readString('SMTP_HOST');
   const SMTP_PORT = readString('SMTP_PORT');
   const SMTP_USER = readString('SMTP_USER');
   const SMTP_PASS = readString('SMTP_PASS');
   const SMTP_FROM = readString('SMTP_FROM');
 
-  if (EMAIL_PROVIDER === 'smtp') {
-    if (!SMTP_HOST) errors.push('SMTP_HOST is required when EMAIL_PROVIDER="smtp".');
-    if (!SMTP_PORT) errors.push('SMTP_PORT is required when EMAIL_PROVIDER="smtp".');
-    if (!SMTP_USER) errors.push('SMTP_USER is required when EMAIL_PROVIDER="smtp".');
-    if (!SMTP_PASS) errors.push('SMTP_PASS is required when EMAIL_PROVIDER="smtp".');
-    if (!SMTP_FROM) errors.push('SMTP_FROM is required when EMAIL_PROVIDER="smtp".');
-  }
-
-  const TENCENT_CAPTCHA_APP_ID = readString('TENCENT_CAPTCHA_APP_ID');
+  const TENCENT_CAPTCHA_APP_ID =
+    readString('NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID') || readString('TENCENT_CAPTCHA_APP_ID');
   const TENCENT_CAPTCHA_APP_SECRET = readString('TENCENT_CAPTCHA_APP_SECRET');
 
   if (TENCENT_CAPTCHA_APP_SECRET && !TENCENT_CAPTCHA_APP_ID) {
@@ -113,9 +115,13 @@ function loadEnv(): Env {
 
   return {
     NEXT_PUBLIC_SITE_URL,
-    LEADS_STORE,
+    NEXT_PUBLIC_RFQ_ENDPOINT,
+    NEXT_PUBLIC_RFQ_EMAIL,
     ASSET_BASE_URL,
+    BAIDU_TONGJI_ID: readString('NEXT_PUBLIC_BAIDU_TONGJI_ID') || readString('BAIDU_TONGJI_ID'),
+    TENCENT_CAPTCHA_APP_ID,
     EMAIL_PROVIDER: EMAIL_PROVIDER!,
+    LEADS_STORE: readString('LEADS_STORE', './data/leads.json')!,
     SMTP_HOST,
     SMTP_PORT: parsePort('SMTP_PORT', SMTP_PORT),
     SMTP_USER,
@@ -123,8 +129,6 @@ function loadEnv(): Env {
     SMTP_FROM,
     FEISHU_WEBHOOK_URL: readString('FEISHU_WEBHOOK_URL'),
     WECOM_WEBHOOK_URL: readString('WECOM_WEBHOOK_URL'),
-    BAIDU_TONGJI_ID: readString('BAIDU_TONGJI_ID'),
-    TENCENT_CAPTCHA_APP_ID,
     TENCENT_CAPTCHA_APP_SECRET
   };
 }

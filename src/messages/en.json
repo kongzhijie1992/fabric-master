@@ -21,7 +21,11 @@
     "rateLimit": "Too many requests. Please try again later.",
     "captchaRequired": "Please complete Tencent captcha verification.",
     "captchaVerify": "Verify Tencent Captcha",
-    "captchaVerified": "Captcha verified"
+    "captchaVerified": "Captcha verified",
+    "requestFailed": "Submission failed. Please try again later or contact us directly.",
+    "mailClientError": "Unable to open your email client. Please contact us directly.",
+    "staticModeNote": "Static mode: submitting this form opens your email client draft. File uploads are not sent automatically.",
+    "endpointModeNote": "Endpoint mode: this form posts directly to your configured external RFQ endpoint."
   },
   "Footer": {
     "rights": "All rights reserved.",
