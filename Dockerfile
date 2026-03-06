@@ -1,33 +1,39 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine AS builder
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-FROM base AS deps
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ARG NEXT_PUBLIC_SITE_URL=http://localhost:3000
+ARG NEXT_PUBLIC_RFQ_ENDPOINT=
+ARG NEXT_PUBLIC_RFQ_EMAIL=sales@example.com
+ARG ASSET_BASE_URL=
+ARG NEXT_PUBLIC_ASSET_BASE_URL=
+ARG BAIDU_TONGJI_ID=
+ARG NEXT_PUBLIC_BAIDU_TONGJI_ID=
+ARG TENCENT_CAPTCHA_APP_ID=
+ARG NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID=
+
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_RFQ_ENDPOINT=$NEXT_PUBLIC_RFQ_ENDPOINT
+ENV NEXT_PUBLIC_RFQ_EMAIL=$NEXT_PUBLIC_RFQ_EMAIL
+ENV ASSET_BASE_URL=$ASSET_BASE_URL
+ENV NEXT_PUBLIC_ASSET_BASE_URL=$NEXT_PUBLIC_ASSET_BASE_URL
+ENV BAIDU_TONGJI_ID=$BAIDU_TONGJI_ID
+ENV NEXT_PUBLIC_BAIDU_TONGJI_ID=$NEXT_PUBLIC_BAIDU_TONGJI_ID
+ENV TENCENT_CAPTCHA_APP_ID=$TENCENT_CAPTCHA_APP_ID
+ENV NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID=$NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID
+
 RUN pnpm build
 
-FROM node:20-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+FROM nginx:1.27-alpine AS runner
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/out /usr/share/nginx/html
 
-RUN addgroup -S nextjs && adduser -S nextjs -G nextjs
-
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/data ./data
-
-RUN chown -R nextjs:nextjs /app
-USER nextjs
-
-EXPOSE 3000
-CMD ["node", "server.js"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

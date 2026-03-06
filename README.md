@@ -1,6 +1,8 @@
-# Official B2B Garment Factory Website (Static Export for Alibaba OSS)
+# Official B2B Garment Factory Website (Static Export for Alibaba OSS / ECS)
 
-This project now runs as a pure static website (`next export`) so it can be hosted on Alibaba Cloud OSS + optional CDN.
+This project now runs as a pure static website (`next export`) so it can be hosted on:
+- Alibaba Cloud OSS (+ optional CDN), or
+- Alibaba Cloud ECS with Docker (Nginx static serving).
 
 ## Key Mode Change
 
@@ -66,6 +68,63 @@ For `timelessclothinggroup.com.cn` and `www`:
 ### 4) HTTPS
 
 Recommended: use Alibaba CDN in front of OSS and configure SSL certificate there.
+
+## Alibaba ECS Deployment (Docker)
+
+Recommended runtime image:
+- `nginx:1.27-alpine` (already used in the provided `Dockerfile`)
+
+Why this image:
+- Minimal and stable for static file serving
+- Lower memory footprint than running Node.js runtime for a static export
+
+### 1) Prepare ECS
+
+```bash
+sudo apt-get update
+sudo apt-get install -y docker.io docker-compose-plugin
+sudo systemctl enable docker
+sudo systemctl start docker
+```
+
+### 2) Upload project to ECS
+
+```bash
+scp -r ./fabric-master root@YOUR_ECS_IP:/opt/fabric-master
+ssh root@YOUR_ECS_IP
+cd /opt/fabric-master
+```
+
+### 3) Create build env file
+
+Create `.env.production`:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://timelessclothinggroup.com.cn
+NEXT_PUBLIC_RFQ_EMAIL=kong.zhijie1992@gmail.com
+NEXT_PUBLIC_RFQ_ENDPOINT=
+ASSET_BASE_URL=
+```
+
+### 4) Build and run container
+
+```bash
+docker compose --env-file .env.production up -d --build
+docker compose ps
+```
+
+### 5) Open ECS security group ports
+
+Allow inbound:
+- `80` (HTTP)
+- `443` (if you later add TLS reverse proxy)
+
+### 6) Verify
+
+Open:
+- `http://YOUR_ECS_IP/`
+- `http://YOUR_ECS_IP/zh/`
+- `http://YOUR_ECS_IP/en/`
 
 ## Environment Variables (`.env.local` for build time)
 
