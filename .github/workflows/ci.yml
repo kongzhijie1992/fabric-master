@@ -31,5 +31,8 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Email Notifier Test
+        run: pnpm test:email
+
       - name: Build
         run: pnpm build

@@ -29,6 +29,7 @@ pnpm-debug.log*
 
 # coverage
 /coverage
+.tmp-email-test/
 
 # vercel
 .vercel

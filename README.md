@@ -28,6 +28,14 @@ Open:
 - `http://localhost:3000/zh/`
 - `http://localhost:3000/en/`
 
+## Test Email Notifier Logic
+
+Run this after changing SMTP notifier code:
+
+```bash
+pnpm test:email
+```
+
 ## Build Static Files
 
 ```bash
@@ -101,7 +109,7 @@ Create `.env.production`:
 
 ```env
 NEXT_PUBLIC_SITE_URL=https://timelessclothinggroup.com.cn
-NEXT_PUBLIC_RFQ_EMAIL=kong.zhijie1992@gmail.com
+NEXT_PUBLIC_RFQ_EMAIL=publicrelations@timelessclothinggroup.com.cn
 NEXT_PUBLIC_RFQ_ENDPOINT=
 ASSET_BASE_URL=
 ```

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
-import {env} from '@/lib/env';
-import type {LeadNotifier, LeadRecord} from '@/lib/leads/types';
+import {env} from '../env';
+import type {LeadNotifier, LeadRecord} from './types';
 
 function formatLeadText(lead: LeadRecord) {
   return [
@@ -75,20 +75,26 @@ export class WeComNotifier implements LeadNotifier {
 export class EmailNotifier implements LeadNotifier {
   readonly channel = 'smtp';
 
-  private readonly transport = nodemailer.createTransport({
-    host: env.SMTP_HOST,
-    port: env.SMTP_PORT,
-    secure: env.SMTP_PORT === 465,
-    auth: {
-      user: env.SMTP_USER,
-      pass: env.SMTP_PASS
+  constructor(
+    private readonly transport: Pick<nodemailer.Transporter, 'sendMail'> = nodemailer.createTransport({
+      host: env.SMTP_HOST,
+      port: env.SMTP_PORT,
+      secure: env.SMTP_PORT === 465,
+      auth: {
+        user: env.SMTP_USER,
+        pass: env.SMTP_PASS
+      }
+    }),
+    private readonly mailConfig: {from?: string; to: string} = {
+      from: env.SMTP_FROM,
+      to: env.NEXT_PUBLIC_RFQ_EMAIL
     }
-  });
+  ) {}
 
   async notify(lead: LeadRecord) {
     await this.transport.sendMail({
-      from: env.SMTP_FROM,
-      to: env.SMTP_FROM,
+      from: this.mailConfig.from,
+      to: this.mailConfig.to,
       subject: `[RFQ] ${lead.company} - ${lead.productType}`,
       text: formatLeadText(lead)
     });

@@ -12,6 +12,8 @@
     "export": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "pnpm test:email",
+    "test:email": "tsc -p tsconfig.email-test.json && node --test .tmp-email-test/src/lib/leads/notifiers.email.test.js",
     "typecheck": "tsc --noEmit --incremental false -p tsconfig.typecheck.json",
     "format": "prettier --write ."
   },

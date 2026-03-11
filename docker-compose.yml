@@ -8,7 +8,7 @@ services:
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
         NEXT_PUBLIC_RFQ_ENDPOINT: ${NEXT_PUBLIC_RFQ_ENDPOINT:-}
-        NEXT_PUBLIC_RFQ_EMAIL: ${NEXT_PUBLIC_RFQ_EMAIL:-sales@example.com}
+        NEXT_PUBLIC_RFQ_EMAIL: ${NEXT_PUBLIC_RFQ_EMAIL:-publicrelations@timelessclothinggroup.com.cn}
         ASSET_BASE_URL: ${ASSET_BASE_URL:-}
         NEXT_PUBLIC_ASSET_BASE_URL: ${NEXT_PUBLIC_ASSET_BASE_URL:-}
         BAIDU_TONGJI_ID: ${BAIDU_TONGJI_ID:-}

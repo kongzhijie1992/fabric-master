@@ -63,7 +63,7 @@ function loadEnv(): Env {
 
   const NEXT_PUBLIC_SITE_URL = readString('NEXT_PUBLIC_SITE_URL', 'http://localhost:3000')!;
   const NEXT_PUBLIC_RFQ_ENDPOINT = readString('NEXT_PUBLIC_RFQ_ENDPOINT');
-  const NEXT_PUBLIC_RFQ_EMAIL = readString('NEXT_PUBLIC_RFQ_EMAIL', 'sales@example.com')!;
+  const NEXT_PUBLIC_RFQ_EMAIL = readString('NEXT_PUBLIC_RFQ_EMAIL', 'publicrelations@timelessclothinggroup.com.cn')!;
   const ASSET_BASE_URL = normalizeBaseUrl(readString('ASSET_BASE_URL') || readString('NEXT_PUBLIC_ASSET_BASE_URL'));
 
   const providerRaw = readString('EMAIL_PROVIDER', 'none')!;
@@ -100,6 +100,14 @@ function loadEnv(): Env {
   const SMTP_USER = readString('SMTP_USER');
   const SMTP_PASS = readString('SMTP_PASS');
   const SMTP_FROM = readString('SMTP_FROM');
+
+  if (EMAIL_PROVIDER === 'smtp') {
+    if (!SMTP_HOST) errors.push('SMTP_HOST is required when EMAIL_PROVIDER="smtp".');
+    if (!SMTP_PORT) errors.push('SMTP_PORT is required when EMAIL_PROVIDER="smtp".');
+    if (!SMTP_USER) errors.push('SMTP_USER is required when EMAIL_PROVIDER="smtp".');
+    if (!SMTP_PASS) errors.push('SMTP_PASS is required when EMAIL_PROVIDER="smtp".');
+    if (!SMTP_FROM) errors.push('SMTP_FROM is required when EMAIL_PROVIDER="smtp".');
+  }
 
   const TENCENT_CAPTCHA_APP_ID =
     readString('NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID') || readString('TENCENT_CAPTCHA_APP_ID');

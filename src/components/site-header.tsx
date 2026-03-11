@@ -6,7 +6,7 @@ import type {AppLocale} from '@/i18n/routing';
 import {Link, usePathname, useRouter} from '@/i18n/navigation';
 
 const navItems = [
-  {key: 'home', href: ''},
+  {key: 'home', href: '/'},
   {key: 'capabilities', href: '/capabilities'},
   {key: 'quality', href: '/quality-compliance'},
   {key: 'products', href: '/products'},

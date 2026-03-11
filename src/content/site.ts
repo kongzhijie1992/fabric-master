@@ -15,7 +15,7 @@ export const companyFacts = {
 
 export const contactConfig = {
   phone: '+86-158-0681-2960',
-  email: 'kong.zhijie1992@gmail.com',
+  email: 'publicrelations@timelessclothinggroup.com.cn',
   wechat: 'factory-wechat-id',
   address: '迎宾路（第二职业中等专业学校院内）'
 } as const;

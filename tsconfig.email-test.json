@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "incremental": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": ".tmp-email-test",
+    "rootDir": ".",
+    "isolatedModules": false
+  },
+  "include": [
+    "src/lib/env.ts",
+    "src/lib/leads/types.ts",
+    "src/lib/leads/notifiers.ts",
+    "src/lib/leads/notifiers.email.test.ts"
+  ]
+}

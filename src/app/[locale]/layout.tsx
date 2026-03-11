@@ -6,6 +6,7 @@ import type {ReactNode} from 'react';
 import {SiteHeader} from '@/components/site-header';
 import {SiteFooter} from '@/components/site-footer';
 import {BaiduTongji} from '@/components/baidu-tongji';
+import {RoutePrefetcher} from '@/components/route-prefetcher';
 import {companyFacts} from '@/content/site';
 import {routing, type AppLocale} from '@/i18n/routing';
 import {env} from '@/lib/env';
@@ -70,7 +71,7 @@ export default async function LocaleLayout({
 
   const resolvedLocale = locale as AppLocale;
   unstable_setRequestLocale(resolvedLocale);
-  const messages = await getMessages();
+  const messages = await getMessages({locale: resolvedLocale});
 
   const organizationSchema = {
     '@context': 'https://schema.org',
@@ -90,6 +91,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={resolvedLocale}>
       {env.BAIDU_TONGJI_ID ? <BaiduTongji siteId={env.BAIDU_TONGJI_ID} /> : null}
+      <RoutePrefetcher locale={resolvedLocale} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(organizationSchema)}} />
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
