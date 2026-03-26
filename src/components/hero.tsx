@@ -86,10 +86,10 @@ export async function Hero({
               {/* Corner Decorations - Updated gradient to match brand */}
               <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-900/70 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
-                <div className="text-sm font-medium">Premium Quality</div>
+                <div className="text-sm font-medium">{locale === 'zh' ? '优质品质' : 'Premium Quality'}</div>
                 <div className="flex items-center gap-2">
                   <ThreadSpool className="h-5 w-5" />
-                  <span className="text-xs">Crafted with Precision</span>
+                  <span className="text-xs">{locale === 'zh' ? '精工细作' : 'Crafted with Precision'}</span>
                 </div>
               </div>
             </div>

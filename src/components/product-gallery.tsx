@@ -14,6 +14,32 @@ type ProductItem = {
   customization: string;
 };
 
+type LocaleLabels = {
+  materials: string;
+  moq: string;
+  leadTime: string;
+  customization: string;
+};
+
+const enLabels: LocaleLabels = {
+  materials: 'Materials',
+  moq: 'MOQ',
+  leadTime: 'Lead time',
+  customization: 'Customization'
+};
+
+const zhLabels: LocaleLabels = {
+  materials: '面料',
+  moq: '最小起订量',
+  leadTime: '交期',
+  customization: '定制'
+};
+
+function detectLocale(products: ProductItem[]): boolean {
+  if (products.length === 0) return false;
+  return /[\u4e00-\u9fa5]/.test(products[0].label);
+}
+
 export function ProductGallery({
   allLabel,
   products
@@ -26,6 +52,9 @@ export function ProductGallery({
   const filters = useMemo(() => [{id: 'all', label: allLabel}, ...products.map((item) => ({id: item.id, label: item.label}))], [allLabel, products]);
 
   const visible = active === 'all' ? products : products.filter((item) => item.id === active);
+
+  const isZh = detectLocale(products);
+  const labels: LocaleLabels = isZh ? zhLabels : enLabels;
 
   return (
     <div>
@@ -52,16 +81,16 @@ export function ProductGallery({
               <h3 className="text-lg font-semibold text-slate-900">{item.label}</h3>
               <p className="text-sm text-slate-600">{item.description}</p>
               <p className="text-sm text-slate-700">
-                <span className="font-semibold">Materials:</span> {item.materials}
+                <span className="font-semibold">{labels.materials}:</span> {item.materials}
               </p>
               <p className="text-sm text-slate-700">
-                <span className="font-semibold">MOQ:</span> {item.moq}
+                <span className="font-semibold">{labels.moq}:</span> {item.moq}
               </p>
               <p className="text-sm text-slate-700">
-                <span className="font-semibold">Lead time:</span> {item.leadTime}
+                <span className="font-semibold">{labels.leadTime}:</span> {item.leadTime}
               </p>
               <p className="text-sm text-slate-700">
-                <span className="font-semibold">Customization:</span> {item.customization}
+                <span className="font-semibold">{labels.customization}:</span> {item.customization}
               </p>
             </div>
           </article>

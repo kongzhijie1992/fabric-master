@@ -3,7 +3,7 @@ import {env} from '@/lib/env';
 
 const base = env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '');
 const locales = ['zh', 'en'] as const;
-const paths = ['', '/capabilities', '/quality-compliance', '/products', '/about', '/contact', '/legal/privacy', '/legal/terms'] as const;
+const paths = ['', '/capabilities', '/products', '/about', '/contact', '/legal/privacy', '/legal/terms'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

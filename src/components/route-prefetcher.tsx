@@ -7,7 +7,6 @@ import type {AppLocale} from '@/i18n/routing';
 const ROUTE_PATHS = [
   '/',
   '/capabilities',
-  '/quality-compliance',
   '/products',
   '/about',
   '/contact',

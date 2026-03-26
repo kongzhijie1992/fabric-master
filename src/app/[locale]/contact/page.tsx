@@ -29,23 +29,23 @@ export default async function ContactPage({params}: {params: Promise<{locale: Ap
           <SectionHeading title={content.contact.title} description={content.contact.subtitle} />
           <dl className="mt-6 space-y-4 text-sm text-slate-700">
             <div>
-              <dt className="font-semibold text-slate-900">Email</dt>
+              <dt className="font-semibold text-slate-900">{locale === 'zh' ? '邮箱' : 'Email'}</dt>
               <dd>{contactConfig.email}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-slate-900">Phone</dt>
+              <dt className="font-semibold text-slate-900">{locale === 'zh' ? '电话' : 'Phone'}</dt>
               <dd>{contactConfig.phone}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-slate-900">WeChat</dt>
+              <dt className="font-semibold text-slate-900">{locale === 'zh' ? '微信' : 'WeChat'}</dt>
               <dd>{contactConfig.wechat}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-slate-900">WhatsApp</dt>
+              <dt className="font-semibold text-slate-900">{locale === 'zh' ? 'WhatsApp' : 'WhatsApp'}</dt>
               <dd>{whatsapp || '-'}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-slate-900">Address</dt>
+              <dt className="font-semibold text-slate-900">{locale === 'zh' ? '地址' : 'Address'}</dt>
               <dd>{contactConfig.address}</dd>
             </div>
           </dl>

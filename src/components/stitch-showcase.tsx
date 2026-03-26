@@ -49,10 +49,10 @@ export function StitchShowcase({ locale }: { locale: AppLocale }) {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-orange-50 py-16">
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-50 py-16">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -left-1/2 top-0 h-[600px] w-[600px] animate-float opacity-20">
+        <div className="absolute -left-1/2 top-0 h-[600px] w-[600px] animate-float opacity-10">
           <Image
             src={toAssetUrl('/factory/stitch-pattern.svg')}
             alt=""
@@ -60,7 +60,7 @@ export function StitchShowcase({ locale }: { locale: AppLocale }) {
             className="object-cover"
           />
         </div>
-        <div className="absolute -right-1/2 bottom-0 h-[600px] w-[600px] animate-float opacity-20" style={{ animationDelay: '2s' }}>
+        <div className="absolute -right-1/2 bottom-0 h-[600px] w-[600px] animate-float opacity-10" style={{ animationDelay: '2s' }}>
           <Image
             src={toAssetUrl('/factory/stitch-pattern.svg')}
             alt=""

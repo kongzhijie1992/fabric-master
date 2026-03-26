@@ -144,10 +144,10 @@ export const siteContent: Record<AppLocale, SiteLocaleContent> = {
       ]
     },
     trustBlocks: [
-      {title: 'Factory overview', text: '工厂概况与团队协同机制（占位内容，支持后续替换）。'},
-      {title: 'Quality control', text: '来料、在线、尾检三段质检（占位指标，支持编辑）。'},
-      {title: 'Compliance', text: '合规资料按客户项目需求提供。'},
-      {title: 'Clients served', text: '服务客户类型示例：品牌方/贸易商/渠道商（不展示虚构品牌）。'}
+      {title: '工厂概况', text: '工厂概况与团队协同机制（占位内容，支持后续替换）。'},
+      {title: '质量控制', text: '来料、在线、尾检三段质检（占位指标，支持编辑）。'},
+      {title: '合规资质', text: '合规资料按客户项目需求提供。'},
+      {title: '服务客户', text: '服务客户类型示例：品牌方/贸易商/渠道商（不展示虚构品牌）。'}
     ],
     capabilities: {
       introTitle: '生产能力与服务模块',
