@@ -85,7 +85,14 @@ export default async function LocaleLayout({
       '@type': 'PostalAddress',
       streetAddress: companyFacts.addressCn,
       addressCountry: 'CN'
-    }
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+86-158-0681-2960',
+      contactType: 'sales',
+      availableLanguage: ['Chinese', 'English']
+    },
+    sameAs: []
   };
 
   return (

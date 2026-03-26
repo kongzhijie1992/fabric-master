@@ -8,6 +8,8 @@ import {Stats} from '@/components/stats';
 import {FeatureGrid} from '@/components/feature-grid';
 import {FaqAccordion} from '@/components/faq-accordion';
 import {CtaBand} from '@/components/cta-band';
+import {StitchShowcase} from '@/components/stitch-showcase';
+import {ErrorBoundary} from '@/components/error-boundary';
 import {toAssetUrl} from '@/lib/asset';
 
 export async function generateMetadata({params}: {params: Promise<{locale: AppLocale}>}) {
@@ -35,6 +37,11 @@ export default async function HomePage({params}: {params: Promise<{locale: AppLo
         subtitle={content.hero.subtitle}
         bullets={content.hero.bullets}
       />
+
+      {/* Visual Showcase Section - New premium visual element */}
+      <ErrorBoundary>
+        <StitchShowcase locale={locale} />
+      </ErrorBoundary>
 
       <section className="section-gap pt-0">
         <div className="container-shell space-y-10">

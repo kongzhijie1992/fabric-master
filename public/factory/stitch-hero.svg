@@ -1,0 +1,82 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient - Matching brand teal theme -->
+  <rect width="800" height="600" fill="url(#bg-gradient)" />
+  
+  <!-- Decorative Stitch Pattern - Brand colors -->
+  <path d="M50 100 L750 100" stroke="#2f847a" stroke-width="2" stroke-dasharray="10 5" opacity="0.3"/>
+  <path d="M50 150 L750 150" stroke="#2f847a" stroke-width="2" stroke-dasharray="10 5" opacity="0.3"/>
+  <path d="M50 200 L750 200" stroke="#2f847a" stroke-width="2" stroke-dasharray="10 5" opacity="0.3"/>
+  
+  <!-- Central Needle Design -->
+  <g transform="translate(400, 300)">
+    <!-- Needle Body -->
+    <ellipse cx="0" cy="0" rx="15" ry="120" fill="url(#needle-gradient)" transform="rotate(-45)" />
+    <!-- Needle Eye -->
+    <circle cx="0" cy="-80" r="8" fill="#1E293B" transform="rotate(-45)" />
+    <!-- Needle Point -->
+    <path d="M-10 85 L0 120 L10 85 Z" fill="url(#needle-tip)" />
+    
+    <!-- Thread Flowing from Needle - Brand teal color -->
+    <path d="M0 -80 Q-30 -40, 0 0 Q30 40, 0 80 Q-30 120, 0 160" 
+          stroke="#2f847a" stroke-width="3" fill="none" 
+          stroke-linecap="round" opacity="0.8"/>
+    
+    <!-- Decorative Stitch Points along Thread - Brand colors -->
+    <circle cx="-15" cy="-20" r="4" fill="#2f847a" opacity="0.6"/>
+    <circle cx="15" cy="20" r="4" fill="#2f847a" opacity="0.6"/>
+    <circle cx="-15" cy="60" r="4" fill="#2f847a" opacity="0.6"/>
+    <circle cx="15" cy="100" r="4" fill="#2f847a" opacity="0.6"/>
+  </g>
+  
+  <!-- Corner Decorations - Brand teal theme -->
+  <g transform="translate(50, 50)">
+    <circle cx="0" cy="0" r="20" fill="#2f847a" opacity="0.2"/>
+    <circle cx="0" cy="0" r="15" fill="#2f847a" opacity="0.3"/>
+    <circle cx="0" cy="0" r="8" fill="#2f847a" opacity="0.5"/>
+  </g>
+  
+  <g transform="translate(750, 550)">
+    <circle cx="0" cy="0" r="25" fill="#2f847a" opacity="0.2"/>
+    <circle cx="0" cy="0" r="18" fill="#2f847a" opacity="0.3"/>
+    <circle cx="0" cy="0" r="10" fill="#2f847a" opacity="0.5"/>
+  </g>
+  
+  <!-- Fabric Texture Overlay -->
+  <rect width="800" height="600" fill="url(#fabric-texture)" opacity="0.05"/>
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f3f8f7"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#d8ebe7"/>
+    </linearGradient>
+    
+    <linearGradient id="needle-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="50%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    
+    <linearGradient id="needle-tip" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    
+    <pattern id="fabric-texture" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="4" fill="#2f847a"/>
+      <path d="M0 2 L4 2 M2 0 L2 4" stroke="#FFFFFF" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  
+  <!-- Animated Sparkles - Brand teal color -->
+  <circle cx="200" cy="150" r="3" fill="#2f847a" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="600" cy="200" r="3" fill="#2f847a" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="300" cy="450" r="3" fill="#2f847a" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+  </circle>
+</svg>

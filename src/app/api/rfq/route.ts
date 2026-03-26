@@ -6,13 +6,10 @@ import {env} from '@/lib/env';
 import {verifyTencentCaptcha} from '@/lib/leads/captcha';
 import {persistLeadAndNotify} from '@/lib/leads/service';
 import {checkRateLimit} from '@/lib/leads/rate-limit';
+import {VALIDATION_LIMITS, ALLOWED_LOCALES, ALLOWED_FILE_EXTENSIONS, ALLOWED_MIME_TYPES} from '@/lib/leads/types';
 import type {LeadAttachment} from '@/lib/leads/types';
 
-const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
-const MAX_MESSAGE_LENGTH = 5000;
-const MAX_TEXT_LENGTH = 300;
-const ALLOWED_LOCALES = new Set(['zh', 'en']);
-const ALLOWED_EXTENSIONS = new Set(['.pdf', '.doc', '.docx', '.zip', '.rar', '.png', '.jpg', '.jpeg']);
+const {MAX_ATTACHMENT_SIZE, MAX_MESSAGE_LENGTH, MAX_TEXT_LENGTH, RATE_LIMIT_WINDOW, RATE_LIMIT_MAX_REQUESTS} = VALIDATION_LIMITS;
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -36,9 +33,10 @@ function sanitizeFileName(name: string) {
   return normalized.length > 80 ? normalized.slice(0, 80) : normalized;
 }
 
-function validateRequired(name: string, value: string, maxLength = MAX_TEXT_LENGTH) {
+function validateRequired(name: string, value: string, maxLength?: number) {
+  const limit = maxLength ?? MAX_TEXT_LENGTH;
   if (!value) return `${name} is required`;
-  if (value.length > maxLength) return `${name} is too long`;
+  if (value.length > limit) return `${name} is too long`;
   return '';
 }
 
@@ -47,15 +45,21 @@ function validateEmail(email: string) {
 }
 
 async function saveAttachment(file: File): Promise<LeadAttachment> {
-  if (file.size > MAX_ATTACHMENT_BYTES) {
+  if (file.size > MAX_ATTACHMENT_SIZE) {
     throw new Error('attachment_too_large');
   }
 
   const originalName = file.name || 'attachment.bin';
   const ext = path.extname(originalName).toLowerCase();
 
-  if (!ALLOWED_EXTENSIONS.has(ext)) {
+  if (!ALLOWED_FILE_EXTENSIONS.has(ext as any)) {
     throw new Error('attachment_type_not_allowed');
+  }
+
+  // Validate MIME type for additional security
+  if (!ALLOWED_MIME_TYPES.has(file.type as any)) {
+    console.warn(`MIME type mismatch: ${file.type} for ${originalName}`);
+    // Don't reject, just warn - some browsers may not set correct MIME type
   }
 
   const uploadDir = path.resolve(process.cwd(), 'data/uploads');
@@ -79,7 +83,7 @@ async function saveAttachment(file: File): Promise<LeadAttachment> {
 export async function POST(req: NextRequest) {
   try {
     const ip = getClientIp(req);
-    const rate = checkRateLimit(`rfq:${ip}`, 8, 10 * 60 * 1000);
+    const rate = checkRateLimit(`rfq:${ip}`, RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW);
 
     if (!rate.allowed) {
       return NextResponse.json(
@@ -102,7 +106,7 @@ export async function POST(req: NextRequest) {
     }
 
     const localeRaw = readText(formData, 'locale');
-    const locale = ALLOWED_LOCALES.has(localeRaw) ? (localeRaw as 'zh' | 'en') : 'en';
+    const locale = ALLOWED_LOCALES.has(localeRaw as any) ? (localeRaw as 'zh' | 'en') : 'en';
 
     const name = readText(formData, 'name');
     const company = readText(formData, 'company');

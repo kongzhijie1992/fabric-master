@@ -123,8 +123,8 @@ export const siteContent: Record<AppLocale, SiteLocaleContent> = {
       badge: '服装制造 / OEM ODM',
       title: '稳定交付的大货服装制造合作伙伴',
       subtitle:
-        '面向品牌方、贸易商与渠道客户，提供从打样到量产的服装制造服务。页面数据可按实际产能与排期实时更新。',
-      bullets: ['交期（占位）：20-45天', '质量管控（占位）：三道检验流程', '月产能（占位）：可按品类配置']
+        '面向品牌方、贸易商与渠道客户，提供从打样到量产的服装制造服务。',
+      bullets: ['交期：20-45天', '质量管控：三道检验流程', '月产能（占位）：可按品类配置']
     },
     factoryAtGlance: {
       title: '工厂一览',
