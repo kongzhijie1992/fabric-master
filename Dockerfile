@@ -1,6 +1,5 @@
-# Builder stage - optimized for Alibaba Cloud
-# Using Alibaba Cloud container registry for faster pulls in China
-FROM registry.cn-hangzhou.aliyuncs.com/acs/node:20-alpine AS builder
+# Builder stage - optimized for build performance
+FROM node:20-alpine AS builder
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -42,9 +41,8 @@ ENV NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID=$NEXT_PUBLIC_TENCENT_CAPTCHA_APP_ID
 # This generates static assets in the /out directory
 RUN pnpm build
 
-# Production stage - minimal nginx image with Alibaba Cloud mirror
-# Using Alibaba Cloud nginx image for optimal performance in China
-FROM registry.cn-hangzhou.aliyuncs.com/acs/nginx:1.27-alpine AS runner
+# Production stage - minimal nginx image
+FROM nginx:1.27-alpine AS runner
 
 # Copy custom nginx configuration
 # Configured for serving Next.js static exports
